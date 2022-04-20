@@ -42,6 +42,5 @@ def news_get():
     return jsonify({'news_list': news_list})
 
 
-
 if __name__ == '__main__':
     app.run('0.0.0.0', port=5000, debug=True)
