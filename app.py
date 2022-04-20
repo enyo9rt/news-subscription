@@ -6,7 +6,7 @@ from DB_ADMIN import account
 app = Flask(__name__)
 
 client = MongoClient(account.API_KEY)
-db = client.real
+db = client.teamHaromony
 
 
 @app.route('/')
