@@ -5,7 +5,7 @@ app = Flask(__name__)
 
 @app.route('/')
 def harmony():
-    return "<h1>Harmony</h1>"
+    return "<h2>Harmony</h2>"
 
 
 if __name__ == "__main__":
