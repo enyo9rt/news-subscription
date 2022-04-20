@@ -56,3 +56,4 @@ open_box = () => {
 close_box = () => {
     $('#post-box').hide()
 }
+

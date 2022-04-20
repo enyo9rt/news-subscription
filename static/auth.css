@@ -1,0 +1,17 @@
+
+.register-form {
+    display: grid;
+    place-items: center;
+    min-height: 100vh;
+}
+
+.register-form-panel {
+    width: 350px;
+    border: 1px solid gray;
+    padding: 20px;
+    border-radius: 7px;
+}
+
+#check-btn {
+    margin-top: 10px;
+}
