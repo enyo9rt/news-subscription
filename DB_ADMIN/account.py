@@ -1,0 +1,1 @@
+API_KEY = 'mongodb+srv://test:1234@cluster0.zxfvq.mongodb.net/Cluster0?retryWrites=true&w=majority'

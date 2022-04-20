@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+    crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="static/style.css" />
+    <title>스파르타 피디아</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&display=swap" rel="stylesheet">
+
+</head>
+
+<body>
+    <div class="mytitle">
+        <h1>할머니의 신문배달</h1>
+        <h5>구독만 하세요 우리 할머니(Harmoney)가 배달해드립니다.</h5>
+        <button onclick="open_box()">구독하기</button>
+    </div>
+
+    <div class="subscription-container" id="post-box">
+        <div class="input-group mb-3">
+            <label class="input-group-text" >분야</label>
+            <select class="form-select" id="subscription_type">
+                <option selected>-- 어느 분야 신문을 구독해 드릴까요?? --</option>
+                <option value="정치">정치</option>
+                <option value="경제">경제</option>
+                <option value="사회">사회</option>
+                <option value="IT/과학">IT/과학</option>
+                <option value="팩트체크">세계</option>
+            </select>
+        </div>
+        <div class="input-group mb-3">
+            <label class="input-group-text" >배달 시간</label>
+            <select class="form-select" id="delivery_time">
+                <option selected>-- 할머니가 몇시에 배달해 줄까요?? --</option>
+                <option value="6">할머니가 이제 막 잠을 깬 6시</option>
+                <option value="11">할머니가 한참 배고플 11시</option>
+                <option value="15">할머니가 슬슬 피곤해질 15시</option>
+                <option value="18">할머니가 잠이 오는 18시</option>
+                <option value="22">할머니가 영감님이 보이는 22시</option>
+            </select>
+        </div>
+        <div class="form-floating">
+            <textarea id="user_email" class="form-control" ></textarea>
+            <label>구독 받을 이메일 입력</label>
+        </div>
+        <div class="subscription-btns">
+            <button onclick="subscription()" type="button" class="btn btn-dark">작성</button>
+            <button onclick="close_box()" type="button" class="btn btn-outline-dark">닫기</button>
+        </div>
+    </div>
+    <div class="mycards">
+        <div class="row row-cols-1 row-cols-md-4 g-4" id="cards-box">
+            <div class="col">
+                <div class="card h-100">
+                    <img src="https://movie-phinf.pstatic.net/20210728_221/1627440327667GyoYj_JPEG/movie_image.jpg"
+                         class="card-img-top">
+                    <div class="card-body">
+                        <h5 class="card-title">제목</h5>
+                        <p class="card-text">내용</p>
+                        <p>⭐⭐⭐</p>
+                        <p class="mycomment">나의 한줄 평을 씁니다</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="./static/js/main.js"></script>
+</body>
+
+</html>
