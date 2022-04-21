@@ -9,7 +9,7 @@ app = Flask(__name__)
 app.register_blueprint(weather.weather_api)
 
 client = MongoClient(account.API_KEY)
-db = client.real
+db = client.teamHaromony
 
 
 
