@@ -1,14 +1,15 @@
 import bcrypt
 import jwt
 from flask import request, Flask, render_template, make_response
-from flask_restx import Resource, Namespace, fields
+from flask_restx import Resource, Namespace
 from pymongo import MongoClient
 
 import constants as cst
-
 # MongoDB 관련 설정
-client = MongoClient('localhost', 27017)
-db = client.harmonydb
+from DB_ADMIN import account
+
+client = MongoClient(account.API_KEY)
+db = client.Haromony
 #
 
 app = Flask(__name__)
@@ -19,18 +20,6 @@ Auth = Namespace(
     description="사용자 인증을 위한 API",
 )
 
-# 스웨거(API 자동 문서화) 관련 설정 부분
-user_fields = Auth.model('User', {
-    'name': fields.String(description='a User Name', required=True, example="harmony")
-})
-
-user_fields_auth = Auth.inherit('User Auth', user_fields, {
-    'password': fields.String(description='Password', required=True, example="password")
-})
-
-
-#
-
 @Auth.route('/register')
 class AuthRegister(Resource):
     """회원 가입을 위한 클래스 입니다."""
@@ -38,7 +27,6 @@ class AuthRegister(Resource):
      @Auth.expect, @Auth.doc 는 스웨거에 세부적으로 설정하기 위해서 사용하는 어노테이션입니다. 
     '''
 
-    @Auth.expect(user_fields_auth)
     @Auth.doc(responses={200: cst.REGISTER_SUCCESS_MSG})
     @Auth.doc(responses={409: cst.REGISTER_FAILED_MSG})
     def get(self):
@@ -72,7 +60,6 @@ class AuthRegister(Resource):
 class AuthLogin(Resource):
     """로그인을 위한 클래스 입니다."""
 
-    @Auth.expect(user_fields_auth)
     @Auth.doc(responses={200: cst.LOGIN_SUCCESS_MSG})
     @Auth.doc(responses={404: cst.USER_NOT_FOUND_MSG})
     @Auth.doc(responses={500: cst.AUTH_FAILED_MSG})

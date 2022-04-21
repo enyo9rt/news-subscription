@@ -55,7 +55,7 @@ def home():
 @app.route("/subscription", methods=["POST"])
 def subscription():
     """
-    뉴스 구독 정보(뉴스 종류, 전송 시간, user_email)를 subscriptionㅈㅇㅈㅇadmin 컬렉션에 저장
+    뉴스 구독 정보(뉴스 종류, 전송 시간, user_email)를 subscription admin 컬렉션에 저장
     :param: None
     :return: 문자열, 함수 성공 여부
     """
