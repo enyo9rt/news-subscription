@@ -5,6 +5,8 @@ from dev_module import weather
 from DB_ADMIN import account
 
 app = Flask(__name__)
+# weather.py 파일로 날씨 관련 api 분리 후 가져오기
+app.register_blueprint(weather.weather_api)
 
 client = MongoClient(account.API_KEY)
 db = client.real
@@ -43,12 +45,6 @@ def news_get():
     """
     news_list = news_getter.get_news()
     return jsonify({'news_list': news_list})
-
-
-@app.route("/weather", methods=["GET"])
-def weather_get():
-    # weather.py 파일에서 데이터 가져오기
-    return weather.weather_get()
 
 
 if __name__ == '__main__':
