@@ -37,7 +37,6 @@ const subscription = () => {
     let subscription_type = $("#subscription_type").val();
     let delivery_time = $("#delivery_time").val();
     let user_email = $('#user_email').val();
-    // console.log(subscription_type, delivery_time, user_email)
 
     $.ajax({
         type: 'POST',
