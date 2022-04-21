@@ -16,7 +16,7 @@ Auth = Namespace(
     description="사용자 인증을 위한 API",
 )
 
-user_fields = Auth.model('User', {  # Model 객체 생성
+user_fields = Auth.model('User', {
     'name': fields.String(description='a User Name', required=True, example="harmony")
 })
 
@@ -83,19 +83,6 @@ class AuthLogin(Resource):
         return {
                    cst.DEFAULT_MSG: "로그인 실패"
                }, 404
-
-
-@Auth.route('/get')
-class AuthGet(Resource):
-    @Auth.doc(responses={200: cst.LOGIN_SUCCESS_MSG})
-    @Auth.doc(responses={404: cst.AUTH_FAILED_MSG})
-    def get(self):
-        # 헤더에 Authorization 담아 준다.
-        header = request.headers.get(cst.AUTHORIZATION)
-        if header is None:
-            return {cst.DEFAULT_MSG: cst.PLZ_LOGIN}, 404
-        data = jwt.decode(header, cst.SECRET_KEY, algorithms=cst.JWT_ENCRYPT_ALGORITHM)
-        return data, 200
 
 
 @Auth.route('/register/email-check')

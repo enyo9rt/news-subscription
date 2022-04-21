@@ -93,19 +93,16 @@ function requestSignUp() {
 function requestSignIn() {
   const email = $('#login-email').val();
   const password = $('#login-password').val();
-
+  let token = "";
   $.ajax({
     type: 'POST',
     url: '/auth/login',
+    async: false,
     data: {email_give: email, password_give: password},
     success: function (response) {
+      token = response['Authorization'];
+      console.log(token);
 
-      console.log(response['Authorization']);
-
-
-
-
-      // window.location.href = '../../home';
     }, error: function () {
       const loginCheck = $('#login-check');
       loginCheck.show();
@@ -113,6 +110,23 @@ function requestSignIn() {
       loginCheck.css("color", "red");
     }
   });
+
+  $.ajax({
+    type: 'GET',
+    url: '/home',
+    beforeSend: function (xhr) {
+      xhr.setRequestHeader("Content-type", "application/json");
+      xhr.setRequestHeader("Authorization", token);
+    },
+    data: {},
+    success: function () {
+      window.location.href = '../../home';
+    }, error: function () {
+
+    }
+  });
+
+
 }
 
 function redirectSignUp() {
