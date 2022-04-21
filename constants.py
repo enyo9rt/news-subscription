@@ -11,6 +11,7 @@ PLZ_LOGIN = 'Please Login'
 
 # Request Message
 USER_NAME = 'name'
+USER_EMAIL = 'email'
 USER_PW = 'password'
 DEFAULT_MSG = 'message'
 

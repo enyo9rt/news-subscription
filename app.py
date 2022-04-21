@@ -9,8 +9,11 @@ from todo import Todo
 
 app = Flask(__name__)
 
-client = MongoClient(account.API_KEY)
-db = client.real
+# client = MongoClient(account.API_KEY)
+# db = client.real
+
+client = MongoClient('localhost', 27017)
+db = client.harmonydb
 
 api = Api(
     app,
@@ -46,7 +49,24 @@ def subscription():
     doc = {'subscription_type': subscription_type_receive, 'delivery_time': delivery_time_receive,
            'user_email': user_email_receive}
     db.subscription_admin.insert_one(doc)
+    print(doc)
     return jsonify({'msg': '저장 완료'})
+
+
+# @app.route("/users", methods=["POST"])
+# def users():
+#     name_receive = request.form['name_give']
+#     email_receive = request.form['email_give']
+#     password_receive = request.form['password_give']
+#     doc = {
+#         'name': name_receive,
+#         'email': email_receive,
+#         'password': password_receive
+#     }
+#
+#     print(doc)
+#     db.users.insert_one(doc)
+#     return jsonify({"msg": '저장 완료'})
 
 
 @app.route("/news", methods=["GET"])

@@ -1,11 +1,15 @@
 import bcrypt
 import jwt
-from flask import request, Flask, render_template, make_response
+from flask import request, Flask, render_template, make_response, jsonify
 from flask_restx import Resource, Namespace, fields
+from pymongo import MongoClient
 
 import constants as cst
 
 users = {}
+
+client = MongoClient('localhost', 27017)
+db = client.harmonydb
 
 app = Flask(__name__)
 
@@ -23,28 +27,34 @@ user_fields_auth = Auth.inherit('User Auth', user_fields, {
 })
 
 
-# jwt_fields = Auth.model('JWT', {
-#     'Authorization': fields.String(description='Authorization which you must inclued in header', required=True,
-#                                    example="token")
-# })
-
 @Auth.route('/register')
 class AuthRegister(Resource):
     @Auth.expect(user_fields_auth)
     @Auth.doc(responses={200: cst.REGISTER_SUCCESS_MSG})
     @Auth.doc(responses={500: cst.REGISTER_FAILED_MSG})
+    def get(self):
+        return make_response(render_template("auth/register.html"))
+
     def post(self):
-        name = request.json[cst.USER_NAME]
-        password = request.json[cst.USER_PW]
-        if name in users:
-            return {
-                       cst.DEFAULT_MSG: cst.REGISTER_FAILED_MSG
-                   }, 500
+        name = request.form['name_give']
+        email = request.form['email_give']
+        password = request.form['password_give']
+        encrypted_password = bcrypt.hashpw(password.encode(cst.UTF_8), bcrypt.gensalt())
+
+        doc = {
+            "name": name,
+            "email": email,
+            "password": encrypted_password.decode(cst.UTF_8)
+        }
+
+        if email in users:
+            return {cst.DEFAULT_MSG: cst.REGISTER_FAILED_MSG}, 500
         else:
-            users[name] = bcrypt.hashpw(password.encode(cst.UTF_8), bcrypt.gensalt())
+            users[email] = encrypted_password
+            db.users.insert_one(doc)
             print(users)
             return {
-                       cst.AUTHORIZATION: jwt.encode({cst.USER_NAME: name}, cst.SECRET_KEY,
+                       cst.AUTHORIZATION: jwt.encode({cst.USER_EMAIL: email}, cst.SECRET_KEY,
                                                      algorithm=cst.JWT_ENCRYPT_ALGORITHM)
                    }, 200
 
@@ -59,8 +69,8 @@ class AuthLogin(Resource):
         return make_response(render_template("auth/login.html"))
 
     def post(self):
-        name = request.json[cst.USER_NAME]
-        password = request.json[cst.USER_PW]
+        name = request.form[cst.USER_NAME]
+        password = request.form[cst.USER_PW]
         if name not in users:
             return {
                        cst.DEFAULT_MSG: cst.USER_NOT_FOUND_MSG
@@ -88,3 +98,14 @@ class AuthGet(Resource):
             return {cst.DEFAULT_MSG: cst.PLZ_LOGIN}, 404
         data = jwt.decode(header, cst.SECRET_KEY, algorithms=cst.JWT_ENCRYPT_ALGORITHM)
         return data, 200
+
+
+@Auth.route('/register/email-check')
+class AuthEmailCheck(Resource):
+    @Auth.doc(responses={200: "200 OK"})
+    @Auth.doc(responses={404: "404 ERROR"})
+    @Auth.doc(responses={500: "500 ERROR"})
+    def post(self):
+        email = request.form['email_give']
+        print(f'전달 받은 이메일 값 : {email}')
+        return jsonify({'msg': email})
