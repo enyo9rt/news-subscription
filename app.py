@@ -1,12 +1,12 @@
+import jwt
 from flask import Flask, render_template, request, jsonify
 from flask_restx import Api
 from pymongo import MongoClient
 
-from auth import Auth
+import constants as cst
+from dev_module.auth import Auth
 from dev_module import news_getter
 from dev_module import weather
-from DB_ADMIN import account
-import constants as cst
 
 app = Flask(__name__)
 # weather.py 파일로 날씨 관련 api 분리 후 가져오기
@@ -33,8 +33,11 @@ api.add_namespace(Auth, '/auth')
 def home():
     header = request.headers.get(cst.AUTHORIZATION)
     if header is None:
+        # return {cst.DEFAULT_MSG: cst.PLZ_LOGIN}, 401
         return {cst.DEFAULT_MSG: cst.PLZ_LOGIN}, 401
-    return render_template('index.html')
+
+    data = jwt.decode(header, cst.SECRET_KEY, algorithms=cst.JWT_ENCRYPT_ALGORITHM)
+    return render_template('index.html', data=data)
 
 
 @app.route("/subscription", methods=["POST"])
