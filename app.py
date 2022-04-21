@@ -1,12 +1,17 @@
 from flask import Flask, render_template, request, jsonify
 from pymongo import MongoClient
 from dev_module import news_getter
+from dev_module import weather
 from DB_ADMIN import account
 
 app = Flask(__name__)
+# weather.py 파일로 날씨 관련 api 분리 후 가져오기
+app.register_blueprint(weather.weather_api)
 
 client = MongoClient(account.API_KEY)
 db = client.teamHaromony
+
+
 
 
 @app.route('/')
