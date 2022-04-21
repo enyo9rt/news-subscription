@@ -16,6 +16,11 @@ app.register_blueprint(weather.weather_api)
 client = MongoClient(account.API_KEY)
 db = client.Haromony
 
+'''
+API 자동 문서화를 위한 작업입니다.
+Swagger 관련 설정 부분입니다.
+/docs로 이동하면 확인할 수 있습니다.
+'''
 api = Api(
     app,
     version='0.1',
@@ -27,15 +32,21 @@ api = Api(
     base_url="/test"
 )
 
+# 파일 분리화를 위한 작업입니다.
+# /auth URI가 들어오면 다른 파일로 넘어갈 수 있게 해줍니다.
 api.add_namespace(Auth, '/auth')
 
 
 @app.route('/home')
 def home():
+    """
+    헤더에 토큰이 있는지 확인하고 접근 가능하도록 합니다.
+    메인 페이지에서 토큰을 넣어주면 페이지가 이동을 안해서 토큰을 사용하는 로직은 제외했습니다.
+    """
     header = request.headers.get(cst.AUTHORIZATION)
     if header is None:
         # return {cst.DEFAULT_MSG: cst.PLZ_LOGIN}, 401
-        return {cst.DEFAULT_MSG: cst.PLZ_LOGIN}, 401
+        return render_template('index.html')
 
     data = jwt.decode(header, cst.SECRET_KEY, algorithms=cst.JWT_ENCRYPT_ALGORITHM)
     return render_template('index.html', data=data)
@@ -44,7 +55,7 @@ def home():
 @app.route("/subscription", methods=["POST"])
 def subscription():
     """
-    뉴스 구독 정보(뉴스 종류, 전송 시간, user_email)를 subscription_admin 컬렉션에 저장
+    뉴스 구독 정보(뉴스 종류, 전송 시간, user_email)를 subscriptionㅈㅇㅈㅇadmin 컬렉션에 저장
     :param: None
     :return: 문자열, 함수 성공 여부
     """
