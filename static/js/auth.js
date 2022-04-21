@@ -7,14 +7,9 @@ function checkEmailDuplication() {
   const reg = /^[A-Za-z0-9_\.\-]+@[A-Za-z0-9\-]+\.[A-Za-z0-9\-]+/;
 
   if (reg.test(email_data) === false) {
-    email_check.show();
-    email_check.html("이메일 형식이 올바르지 않습니다.");
-    email_check.css("color", "red");
-    email.focus();
-
+    exceptionEmailType("이메일 형식이 올바르지 않습니다.");
   } else {
     email_check.hide();
-
     $.ajax({
       type: 'POST',
       url: '/auth/register/email-check',
@@ -22,9 +17,21 @@ function checkEmailDuplication() {
       async: false,
       success: function (response) {
         email.attr("disabled", true);
+        console.log("이메일 중복 결과", response['message']);
+      }, error: function () {
+        exceptionEmailType("이미 사용 중인 이메일 입니다.");
       }
     });
   }
+}
+
+function exceptionEmailType(message) {
+  const email = $('#inputEmail');
+  const email_check = $('#email-check');
+  email_check.show();
+  email_check.html(message);
+  email_check.css("color", "red");
+  email.focus();
 }
 
 function checkPassword() {
@@ -62,18 +69,23 @@ function checkPassword() {
 }
 
 function signUpProcess() {
-  if (checkPassword()) {
-    const name = $('#inputName').val();
-    const email = $('#inputEmail').val();
-    const password = $('#pw').val();
+  const name = $('#inputName').val();
+  const email = $('#inputEmail');
+  const emailData = $('#inputEmail').val();
+  const password = $('#pw').val();
 
-    console.log(name, email, password);
+  if (!email.attr("disabled")) {
+    exceptionEmailType("사용하실 이메일을 확인해 주세요.");
+    return;
+  }
+
+  if (checkPassword()) {
     $.ajax({
       type: 'POST',
       url: '/auth/register',
-      data: {name_give: name, email_give: email, password_give: password},
+      data: {name_give: name, email_give: emailData, password_give: password},
       success: function (response) {
-        console.log("회원 가입 결과: " + response)
+        console.log("회원 가입 결과: " + response['message'])
       }
     });
   }

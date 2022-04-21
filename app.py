@@ -52,23 +52,6 @@ def subscription():
     print(doc)
     return jsonify({'msg': '저장 완료'})
 
-
-# @app.route("/users", methods=["POST"])
-# def users():
-#     name_receive = request.form['name_give']
-#     email_receive = request.form['email_give']
-#     password_receive = request.form['password_give']
-#     doc = {
-#         'name': name_receive,
-#         'email': email_receive,
-#         'password': password_receive
-#     }
-#
-#     print(doc)
-#     db.users.insert_one(doc)
-#     return jsonify({"msg": '저장 완료'})
-
-
 @app.route("/news", methods=["GET"])
 def news_get():
     """
