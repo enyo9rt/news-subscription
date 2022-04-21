@@ -2,10 +2,9 @@ from flask import Flask, render_template, request, jsonify
 from flask_restx import Api
 from pymongo import MongoClient
 
-from DB_ADMIN import account
 from auth import Auth
 from dev_module import news_getter
-from todo import Todo
+import constants as cst
 
 app = Flask(__name__)
 
@@ -27,11 +26,13 @@ api = Api(
 )
 
 api.add_namespace(Auth, '/auth')
-api.add_namespace(Todo, '/todos')
 
 
 @app.route('/home')
 def home():
+    header = request.headers.get(cst.AUTHORIZATION)
+    if header is None:
+        return {cst.DEFAULT_MSG: cst.PLZ_LOGIN}, 401
     return render_template('index.html')
 
 
@@ -51,6 +52,7 @@ def subscription():
     db.subscription_admin.insert_one(doc)
     print(doc)
     return jsonify({'msg': '저장 완료'})
+
 
 @app.route("/news", methods=["GET"])
 def news_get():

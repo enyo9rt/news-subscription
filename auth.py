@@ -1,6 +1,6 @@
 import bcrypt
 import jwt
-from flask import request, Flask, render_template, make_response, jsonify
+from flask import request, Flask, render_template, make_response
 from flask_restx import Resource, Namespace, fields
 from pymongo import MongoClient
 
@@ -45,12 +45,6 @@ class AuthRegister(Resource):
             "password": encrypted_password
         }
 
-        user_list = list(db.users.find({}, {'_id': False}))
-
-        for user in user_list:
-            if user[cst.USER_EMAIL] == email:
-                return {cst.DEFAULT_MSG: cst.REGISTER_FAILED_MSG}, 409
-
         db.users.insert_one(doc)
         return {
                    cst.AUTHORIZATION: jwt.encode({cst.USER_EMAIL: email}, cst.SECRET_KEY,
@@ -71,6 +65,7 @@ class AuthLogin(Resource):
         email = request.form['email_give']
         password = request.form['password_give']
 
+        print(email, password)
         user_list = list(db.users.find({}, {'_id': False}))
 
         for user in user_list:
@@ -86,7 +81,7 @@ class AuthLogin(Resource):
                            }, 200
 
         return {
-                   cst.DEFAULT_MSG: cst.USER_NOT_FOUND_MSG
+                   cst.DEFAULT_MSG: "로그인 실패"
                }, 404
 
 
@@ -105,9 +100,8 @@ class AuthGet(Resource):
 
 @Auth.route('/register/email-check')
 class AuthEmailCheck(Resource):
-    @Auth.doc(responses={200: "200 OK"})
-    @Auth.doc(responses={404: "404 ERROR"})
-    @Auth.doc(responses={500: "500 ERROR"})
+    @Auth.doc(responses={200: "이메일 사용 가능"})
+    @Auth.doc(responses={400: "사용 불가"})
     def post(self):
         email = request.form['email_give']
 

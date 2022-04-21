@@ -17,7 +17,6 @@ function checkEmailDuplication() {
       async: false,
       success: function (response) {
         email.attr("disabled", true);
-        console.log("이메일 중복 결과", response['message']);
       }, error: function () {
         exceptionEmailType("이미 사용 중인 이메일 입니다.");
       }
@@ -68,7 +67,7 @@ function checkPassword() {
   }
 }
 
-function signUpProcess() {
+function requestSignUp() {
   const name = $('#inputName').val();
   const email = $('#inputEmail');
   const emailData = $('#inputEmail').val();
@@ -85,8 +84,37 @@ function signUpProcess() {
       url: '/auth/register',
       data: {name_give: name, email_give: emailData, password_give: password},
       success: function (response) {
-        console.log("회원 가입 결과: " + response['message'])
+        window.location.href = 'login';
       }
     });
   }
+}
+
+function requestSignIn() {
+  const email = $('#login-email').val();
+  const password = $('#login-password').val();
+
+  $.ajax({
+    type: 'POST',
+    url: '/auth/login',
+    data: {email_give: email, password_give: password},
+    success: function (response) {
+
+      console.log(response['Authorization']);
+
+
+
+
+      // window.location.href = '../../home';
+    }, error: function () {
+      const loginCheck = $('#login-check');
+      loginCheck.show();
+      loginCheck.html("이메일과 비밀번호를 확인해 주세요.");
+      loginCheck.css("color", "red");
+    }
+  });
+}
+
+function redirectSignUp() {
+  window.location.href = 'register';
 }
