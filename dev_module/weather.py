@@ -1,10 +1,13 @@
-from flask import Flask, render_template, request, jsonify
+from flask import jsonify, Blueprint
 import requests
 import json
 
 OPENWEATHER_API_KEY = "87e3a3b8ff90e9ceb2e9297d20722b2d"
 
+weather_api = Blueprint('weather_api', __name__)
 
+
+@weather_api.route("/weather")
 def weather_get():
     # Google geolocation API로부터 lat 과 lng 데이터 가져오기
     g_url = f'https://www.googleapis.com/geolocation/v1/geolocate?key=AIzaSyDpRifMguxQNS9mb9g0wgF-4OnZPTikIfM'
