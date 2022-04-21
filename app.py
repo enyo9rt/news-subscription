@@ -4,6 +4,7 @@ from flask_restx import Api
 from pymongo import MongoClient
 
 import constants as cst
+from DB_ADMIN import account
 from dev_module.auth import Auth
 from dev_module import news_getter
 from dev_module import weather
