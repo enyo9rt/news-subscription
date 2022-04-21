@@ -1,6 +1,10 @@
         * {
-        font-family: 'Gowun Dodum', sans-serif;
+          font-family: 'Do Hyeon', sans-serif;
         }
+        h1 {
+            font-size: 3.5rem;
+        }
+
         .comment{
             display: flex;
             flex-direction: row;
@@ -19,13 +23,19 @@
 
             color: white;
 
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
+            /*display: flex;*/
+            /*flex-direction: column;*/
+            /*align-items: center;*/
+            /*justify-content: center;*/
         }
 
-        .mytitle > button {
+        .title_content {
+            width: 800px;
+            margin: auto;
+            margin-top: 200px;
+        }
+
+        .title_content > button {
             width: 200px;
             height: 50px;
 
@@ -33,13 +43,13 @@
             color: white;
 
             border-radius: 50px;
-            border: 1px solid white;
+            border: 3px solid white;
 
             margin-top: 10px;
         }
 
-        .mytitle > button:hover {
-            border: 2px solid white;
+        .title_content > button:hover {
+            border: 4px solid white;
         }
 
         .mycomment {
@@ -74,5 +84,11 @@
             margin-right: 10px;
         }
 
+        #weather_container {
+            font-size: 1.3rem;
+            display: flex;
+            justify-content: flex-end;
+            padding: 20px;
+        }
 
 
