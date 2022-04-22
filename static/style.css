@@ -85,5 +85,10 @@
             justify-content: flex-end;
             padding: 20px;
         }
-
-
+        .card-body > a:hover, a:visited, a:link, a:active
+        {
+            text-decoration: none; color: black;
+        }
+        .card-body > a:hover{
+            color: #007afe;
+        }
