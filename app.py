@@ -8,10 +8,13 @@ from DB_ADMIN import account
 from dev_module.auth import Auth
 from dev_module import news_getter
 from dev_module import weather
+from DB_ADMIN import account
+from dev_module.comments import comments
 
 app = Flask(__name__)
 # weather.py 파일로 날씨 관련 api 분리 후 가져오기
 app.register_blueprint(weather.weather_api)
+app.register_blueprint(comments)
 
 client = MongoClient(account.API_KEY)
 db = client.Haromony
@@ -66,8 +69,7 @@ def subscription():
     doc = {'subscription_type': subscription_type_receive, 'delivery_time': delivery_time_receive,
            'user_email': user_email_receive}
     db.subscription_admin.insert_one(doc)
-    print(doc)
-    return jsonify({'msg': '저장 완료'})
+    return jsonify({'msg': '구독 완료'})
 
 
 @app.route("/news", methods=["GET"])

@@ -14,12 +14,16 @@ def get_news():
     data = requests.get(settings.ECONOMY, headers=headers)
     soup = BeautifulSoup(data.text, 'html.parser')
 
-    title = soup.select_one('#main_content > div > div._persist > div:nth-child(1) > div:nth-child(1) > div.cluster_body > ul > li:nth-child(1) > div.cluster_text > a')
     news = soup.select('#main_content > div > div._persist > div:nth-child(1) > div')
     news_box = []
+    error_image = 'https://www.pyeongtaek.go.kr/common/images/etc/ready.jpg'
     for target in news:
         title = target.select_one('div.cluster_body > ul > li:nth-child(1) > div.cluster_text > a')
         sentence = target.select_one('div.cluster_body > ul > li:nth-child(1) > div.cluster_text > div.cluster_text_lede')
-        news_box.append(title.text+'$%$'+sentence.text)
-
+        img_src = target.select_one('div.cluster_body > ul > li:nth-child(1) > div.cluster_thumb > div > a > img')
+        try:
+            news_box.append(title.text+'$%$'+sentence.text+'$%$'+img_src.attrs['src'])
+        except:
+            news_box.append(title.text + '$%$' + sentence.text + '$%$' + error_image)
+            pass
     return news_box
