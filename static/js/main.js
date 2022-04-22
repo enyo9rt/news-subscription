@@ -20,7 +20,7 @@ const listing = () => {
                                             <img src="https://movie-phinf.pstatic.net/20210728_221/1627440327667GyoYj_JPEG/movie_image.jpg"
                                                  class="card-img-top">
                                             <div class="card-body">
-                                                <h5 class="card-title">${title}</h5>
+                                                <a href="comments"><h5 class="card-title">${title}</h5></a>
                                                 <p class="card-text">${contents}</p>
                                                 <p>⭐⭐⭐</p>
                                                 <p class="mycomment">대충 채워넣을 거</p>
