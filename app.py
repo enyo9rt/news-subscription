@@ -33,7 +33,7 @@ def subscription():
     doc = {'subscription_type': subscription_type_receive, 'delivery_time': delivery_time_receive,
            'user_email': user_email_receive}
     db.subscription_admin.insert_one(doc)
-    return jsonify({'msg': '저장 완료'})
+    return jsonify({'msg': '구독 완료'})
 
 
 @app.route("/news", methods=["GET"])
