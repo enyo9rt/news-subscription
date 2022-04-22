@@ -1,5 +1,5 @@
 $(document).ready(function () {
-    listing();
+  listing();
 });
 
 const listing = () => {
