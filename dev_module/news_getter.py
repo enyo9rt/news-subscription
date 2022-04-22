@@ -14,7 +14,6 @@ def get_news():
     data = requests.get(settings.ECONOMY, headers=headers)
     soup = BeautifulSoup(data.text, 'html.parser')
 
-    title = soup.select_one('#main_content > div > div._persist > div:nth-child(1) > div:nth-child(1) > div.cluster_body > ul > li:nth-child(1) > div.cluster_text > a')
     news = soup.select('#main_content > div > div._persist > div:nth-child(1) > div')
     news_box = []
     for target in news:
