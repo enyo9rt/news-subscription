@@ -26,5 +26,4 @@ def get_news():
         except:
             news_box.append(title.text + '$%$' + sentence.text + '$%$' + error_image)
             pass
-    print(news_box)
     return news_box
