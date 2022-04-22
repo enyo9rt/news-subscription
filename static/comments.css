@@ -1,6 +1,14 @@
 * {
     font-family: 'Do Hyeon', sans-serif;
 }
+.back_icon {
+    margin: 40px 0 0 50px;
+    transform:scale(2);
+    color: black;
+}
+.back_icon:hover {
+    color: #007afe;
+}
 .wrap {
     display: flex;
     flex-direction: column;
@@ -8,7 +16,7 @@
     margin: auto;
     justify-content: center;
 }
-.top_contents{
+.top_contents {
     margin: auto;
     width: auto;
 }
@@ -25,7 +33,7 @@
     width: 100%;
     top: 50%;, left: 50%;, transform: translate(-50%, -50%);
 }
-.top_main{
+.top_main {
     display: flex;
     flex-direction: column;
     width: 500px;
@@ -33,29 +41,29 @@
 .top_main > h1 {
     margin-top: 20px;
 }
-.top_sub{
+.top_sub {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
 }
-.like_container{
+.like_container {
     display: flex;
     flex-direction: row;
     align-items: center;
     justify-content: center;
 }
-.like_icon{
+.like_icon {
     margin: 10px 10px 5px 7px;
     transform:scale(1.5);
     color: #007afe;
 }
-.like_result{
+.like_result {
     margin-top: 10px;
 }
-.new_like{
+.new_like {
     margin-top: 10px;
 }
-.comment_submit_container{
+.comment_submit_container {
     width: 500px;
 }
 .comment_button {
@@ -67,9 +75,8 @@
     flex-direction: row;
     align-items: center;
     justify-content: center;
-
 }
-.comments_table{
+.comments_table {
     width: 800px;
     margin: 90px auto;
 }
