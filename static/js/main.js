@@ -15,9 +15,10 @@ const listing = () => {
             for (let i = 0; i < news_list['news_list'].length; i++) {
                 let title = news_list['news_list'][i].split('$%$')[0];
                 let contents = news_list['news_list'][i].split('$%$')[1];
+                let img_src = news_list['news_list'][i].split('$%$')[2];
                 let html_data = `<div class="col">
                                         <div class="card h-100">
-                                            <img src="https://movie-phinf.pstatic.net/20210728_221/1627440327667GyoYj_JPEG/movie_image.jpg"
+                                            <img src=${img_src}
                                                  class="card-img-top">
                                             <div class="card-body">
                                                 <h5 class="card-title">${title}</h5>
